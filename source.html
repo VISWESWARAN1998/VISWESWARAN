@@ -1,0 +1,599 @@
+<ul class="download">
+<li><a href="1160315/Working/code.zip">Download source - 4.3 KB</a></li>
+</ul>
+
+<p style="background-color:red;color:white;font-size:20px;font-family:Elephant">
+    <strong>IMPORTANT:<br></strong>This article has been improved so very much and the selenium tutorial has been added to the article. filling up the entry boxes, clicking the buttons and automating many things have been added to this. However I do not have a good English basement, so the grammer and punctuitation is so <b>WORST</b> sorry I am not shouting. so I have made this entrie article(source) as open source <a href="https://github.com/VISWESWARAN1998/VISWESWARAN"> At Github</a> so if any one is interested please help formatting this. Thank you
+    
+    And one of the comment says this is basic article and now it is becomming a false statement.
+</p>
+
+<h2>Introduction:</h2>
+
+<p>This article is meant for learning web scraping using various libraries avaialable from Python. If you are good with Python you can refer this article, it is a complete guide started from scratch.</p>
+
+<p>Note: I stick with 3.x version which guarantees future usage.</p>
+
+<h2>Background:</h2>
+
+<p>For some who have never heared about web-scrapping.&nbsp;</p>
+
+<p>consider this situation,</p>
+
+<p>a person wants to print two numbers in a console/terminal in python he/she will use some thing like this,</p>
+
+<pre lang="python">
+print(&quot;1 2&quot;)</pre>
+
+<p>so what do you he/she wants to print about 10 numbers? well, he/she can use looping. ok now we can come to our sitution if a website contains information about a person and you want it in an excel? what do you do? you will copy the info of a person and add his contact info other other stuffs in several rows. what do you do when there are infos about 1000 persons? well you have to code a bot to do this work.</p>
+
+<p>There are various libraries out there available for Python I will try to explain all the important stuffs to become a fully fledged web scrapper.</p>
+
+<h2>Using the Libraries:</h2>
+
+<p><strong>Using default urllib.request library:</strong></p>
+
+<p>Python has its own web scrapping which may not be easier for several advanced scrapping however useful for basic scrapping. There is a library named <strong>requests </strong>which is the best alternative and most stable than this so I will cover more in requests than here.</p>
+
+<p>ok open up your favoirte python editor and import this library</p>
+
+<p><strong>[code1]</strong></p>
+
+<pre lang="python">
+import urllib.request
+</pre>
+
+<p>and type the following code,</p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import urllib.request
+source = urllib.request.urlopen(&quot;http://www.codeproject.com&quot;)
+print(source)
+</pre>
+
+<p>here urllib.request.urlopen gets the web-page now when we execute this program we will get something like this,</p>
+
+<p><img alt="" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(387)_LI.jpg" /></p>
+
+<p>Lets have a closer look at this ouptut we got a response object at an address. so here we have actually got an address. http.client.HTTPResponse is a class from that we have used an object and it returned an address. so, inoorder to see the value we will use a pointer to see what is actually in it. modify the print statement above to pointer as ,</p>
+
+<pre lang="python">
+print(*source)</pre>
+
+<p>now when executing the code you will see something like this,</p>
+
+<p><img alt="" height="211" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(388).png" width="479" /></p>
+
+<p>you may ask hey what is this? well, this is the html source code of the web link you are requested for.</p>
+
+<p>on seeing this, a common thought will arise for every one, <strong>oh yeah! I got the html code now I can use regular expressions to get what I want :) </strong>but you should not there is a specific parsing library avaiable which I will explain later.</p>
+
+<p><strong>[code2</strong><strong>] </strong>The same can be achived without using a pointer. just replace *source to source.read()</p>
+
+<p><em><strong><u>Scrapping the images:</u></strong></em></p>
+
+<p>ok, now how to scrape the images using python, ok now lets take a website, we can take this very own site code project not meant for commercial use, open codeprojects home page, you will see a their company logo, right clcik their logo and select view image, you will see this</p>
+
+<p><img alt="" height="164" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(389).png" width="434" /></p>
+
+<p>ok now get the web-link <a href="https://codeproject.global.ssl.fastly.net/App_Themes/CodeProject/Img/logo250x135.gif">https://codeproject.global.ssl.fastly.net/App_Themes/CodeProject/Img/logo250x135.gif</a></p>
+
+<p>note the last letters which says the extension of the image which is gif in our case ok now we can save this into our disk.</p>
+
+<p>Python has a module named urllib.request which can be seen in request.py and it has a member function named urlretrieve which is used to save a file locally from a network and we are going to use it to save our images.</p>
+
+<p><strong>[code 3]:</strong></p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import urllib.request
+# Syntax : urllib.request.urlretrieve(arg1,arg2)
+# arg1 = web url
+# arg2 = path to be saved
+source = urllib.request.urlretrieve(&quot;https://codeproject.global.ssl.fastly.net/App_Themes/CodeProject/Img/logo250x135.gif&quot;,&quot;our.gif&quot;)
+
+
+</pre>
+
+<p>the above code will save the image to the location where python file is located. first argument is url and the second is the file name. refer syntax in code.</p>
+
+<p>That&#39;s it for urllib we need to shift with requests it is important since I found it is more stable everything which can be done with urllib can be done with requests.</p>
+
+<p><u><strong>Requests:</strong></u></p>
+
+<p>Requests will not come along with python you need to install it, to install this just run the below pip command.</p>
+
+<blockquote class="quote">
+<div class="op">PIP COMMAND:</div>
+
+<div class="op">pip install requests</div>
+</blockquote>
+
+<p>or you can use the regular method of installing from source. I leave it to you. try importing requests to check whether requests has been installed successfully.</p>
+
+<pre lang="python">
+import requests</pre>
+
+<p>you should not get any errors while importing this statement.</p>
+
+<p>we will try this code,</p>
+
+<p><strong>[code 4]:</strong></p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import requests
+request = requests.get(&quot;https://www.codeproject.com&quot;)
+print(request)
+</pre>
+
+<p>here we will have a look at line 3(I am counting from 1) in this line request is a variable and requests is a module which has a member function named get which we passed our web-link as an argument. This code will generate this output,</p>
+
+<p><img alt="" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(390).png" style="width: 371px; height: 75px" /></p>
+
+<p>so it is nothing but a http status code which says it is successful.<br />
+<strong>[code 5]: modify the variable present in the print statement to this =&gt; request.content</strong><strong> </strong>the output will be the contents of the web-page which is nothing but an html source.</p>
+
+<p><u><strong>what is an user-agent?</strong></u></p>
+
+<p>In NetWorking while transmitting a data from source to destination the data is split up into smaller chunks called packets, this is a simple definition of a packets in internet. usually a the packet headers consists of several information about the source and the destination. We will only analyse packet headers which are useful for web-scrapping.</p>
+
+<p>I will show you why this is important, first we will fire up our own server<strong> </strong>and make it listen on local machine i.p 127.0.0.1 @ port 1000, here instead of connecting to code project we will connect to this server using http://127.0.0.1:1000, and you will see something like this on server</p>
+
+<p><img alt="" height="196" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(391)_LI.jpg" width="712" /></p>
+
+<p>Lets have a closer look at the message, when we are conneting to the server using <strong>[code 6]</strong>(It is same as of code 4 I&#39;ve jsut changed the destination address) you will find the <u><strong>user-agent as python-requests</strong></u> with its version and other details.</p>
+
+<p>This user-agent reveals that the request is from machine and not from the human so some advanced websites will block you from scraping. so what do we do now?</p>
+
+<p><u><strong>changing the user-agent:</strong></u></p>
+
+<p>This is our code 6,</p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import requests
+request = requests.get(&quot;http://127.0.0.1:1000&quot;)
+print(request.content)
+</pre>
+
+<p>we will add custom headers to our above code,</p>
+
+<p>open up this link in wikipeda for user agent <a href="https://en.wikipedia.org/wiki/User_agent">https://en.wikipedia.org/wiki/User_agent</a></p>
+
+<p>and you will find an examlpe user agent there, ok we will use it for your convineance I will show the example present there,</p>
+
+<blockquote class="quote">
+<div class="op">User agent present in wikipedia example:</div>
+
+<div class="op">
+<pre>
+Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405</pre>
+</div>
+</blockquote>
+
+<p>python <strong>dictionary</strong> is used for adding the user agent and <strong>key = User-Agent ; value = any user agents for example we will take the above</strong>.</p>
+
+<p>so our code will be some thing like this, <strong>[code 7]</strong></p>
+
+<pre lang="python">
+agent = {&#39;User-Agent&#39;: &#39;Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405&#39;}</pre>
+
+<p>Ok, now we can add this dictionary while requesting to change the user agent</p>
+
+<pre lang="python">
+    request = requests.get(&quot;http://127.0.0.1:1000&quot;,headers=agent) #see the additional argument named headers
+</pre>
+
+<p>on execution you will see the user-agent gets changed from python-requests to Mozilla Firefox, <strong>How do I believe? </strong>see the screenshot below</p>
+
+<p><img alt="" height="154" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(392).png" width="681" /></p>
+
+<p><strong>What have we done so far? </strong>we have only got the page source using different methods so we will now gather the data, let&#39;s get started!</p>
+
+<p><strong><u>Library 3 : Beautifulsoup:</u> </strong>pip install beautifulsoup4</p>
+
+<p>so what is beautiful soup is it a scraping library? actually beautifulsoup is a parsing library which is used to parse html.</p>
+
+<p>HTML? yes HTML, remeber all the above methods is used to get the page source which is nothing but an HTML source.</p>
+
+<p><strong>TARGET SCRAPING WEBSITE: </strong><a href="https://www.yellowpages.com.au/search/listings?clue=Restaurants&amp;locationClue=&amp;lat=&amp;lon=&amp;selectedViewMode=list">https://www.yellowpages.com.au/search/listings?clue=Restaurants&amp;locationClue=&amp;lat=&amp;lon=&amp;selectedViewMode=list</a></p>
+
+<p><strong>IMPORTANT: I am using this website just as an example for educational purpouses nothing more, I&#39;ve used this website since it has clear layout with pagination which stands as the best example for scraping other sites which you have permission. I&#39;ve warned you scrapping may lead to penality if used wrong. Dont involve me :)</strong></p>
+
+<p><strong><u>Ok lets get into the topic:</u></strong></p>
+
+<p><strong>IMPORTANT: </strong></p>
+
+<p>Basics Tags in HTML which is mostly used for website scraping:</p>
+
+<blockquote class="quote">
+<div class="op">Tags: (Pocket hints)</div>
+
+<div class="op">&lt;title&gt; &lt;/title&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; =&gt; adds title to the webpage</div>
+
+<div class="op">&lt;p&gt;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; =&gt; Paragraph</div>
+
+<div class="op">&lt;a href=&quot;someLink&quot;&gt; &lt;/a&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; =&gt;Links</div>
+
+<div class="op">&lt;h(x)&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/h(x)&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&gt; Heading tags</div>
+
+<div class="op">and some other tags like div - container and so on, This is not an html tutorial anyways,</div>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p><strong>[How to find we are on the safer side of scraping -identifying the site is not allowing us to scrape]:</strong></p>
+
+<p>The structure of the website is something like this,</p>
+
+<p>&nbsp;</p>
+
+<p><img alt="" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(399).png" /></p>
+
+<p>what we are going to do is we are going to scrape all the bold letters (e.g Royal India Restaurant which is seen in the picture)</p>
+
+<p><strong>STEPS: </strong>Right click the bold words in the website(Royal India Restaurant) and select inspect element. you will see something like this,</p>
+
+<p><img alt="" height="217" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(400).png" width="610" /></p>
+
+<p>so we have got the proper html tag. have a look at it you will find some thing like this,</p>
+
+<p><strong>&lt;a class=&quot;class name&quot; ....</strong> here a means link as I have explained in pocket hints. so the bold letters are link with belongs to a class named <strong>&quot;listing-name&quot;</strong>. So can you guess now how to get all the bold names???</p>
+
+<p>Answer: scaping all the links which belongs to this class name will give us all the name of those restuarants.</p>
+
+<p>Alright we will write a script to scrape all the links first. To get the HTML soure I am going to use requests and to parse the html I am going to use BeautifulSoup.</p>
+
+<p>Ok you may find this code will display the page content</p>
+
+<p><strong>[code 9]: </strong></p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import requests
+from bs4 import BeautifulSoup
+
+
+if __name__==&quot;__main__&quot;:
+    req = requests.get(&quot;https://www.yellowpages.com.au/search/listings?clue=Restaurants&amp;locationClue=&amp;lat=&amp;lon=&amp;selectedViewMode=list&quot;)
+    #req.content = html page source and we are using the html parser
+    soup = BeautifulSoup(req.content,&quot;html.parser&quot;)
+    print(soup)
+    
+</pre>
+
+<p><strong>NO, This will not diplay the page source, the output will be something like this</strong>,</p>
+
+<blockquote class="quote">
+<div class="op">Quote:</div>
+
+<p><strong>We value the quality of content provided to our customers, and to maintain this, we would like to ensure real humans are accessing our information.</strong></p>
+
+<p><strong>.</strong></p>
+
+<p><strong>.</strong></p>
+
+<p><strong>.</strong></p>
+
+<p>&lt;form action=&quot;/dataprotection&quot; method=&quot;post&quot; name=&quot;captcha&quot;&gt;</p>
+
+<p><u>Why did this happen?</u></p>
+
+<p>This page appears when online data protection services detect requests coming from your computer network which appear to be in <u>violation of our website&#39;s terms of use.</u></p>
+
+<p>&nbsp;</p>
+</blockquote>
+
+<p>I told you in the real word scraping the requests comming from python will get blocked. of-course we all violating the their terms and condition but this can be <strong>bypassed easily by adding user agent to it, </strong>I have added the user agent in <strong>[code 9] </strong>and when you run the code this code will work and we will get the page source. <strong>So we have now found that we are violating their terms and condition and we should not scrape further more. So I have ended this here just by showing the scraped names in page1 of the website!. </strong></p>
+
+<p><strong>++++++++++++++++++++++++++++END OF SAFER LINE+++++++++++++++++++++++++++++</strong></p>
+
+<p><strong>+++++++++BELOW ARE THE WAYS TO BREAK THE SECUITY -EDUCATIONAL PURPOUSE ONLY+++++++</strong></p>
+
+<p><strong>so now our modified [code 9]:</strong></p>
+
+<pre lang="python">
+# SWAMI KARUPPASWAMI THUNNAI
+import requests
+from bs4 import BeautifulSoup
+
+
+if __name__==&quot;__main__&quot;:
+    agent = {&#39;User-Agent&#39;: &#39;Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405&#39;}
+    req = requests.get(&quot;https://www.yellowpages.com.au/search/listings?clue=Restaurants&amp;locationClue=&amp;lat=&amp;lon=&amp;selectedViewMode=list&quot;,headers=agent)
+    #req.content = html page source and we are using the html parser
+    soup = BeautifulSoup(req.content,&quot;html.parser&quot;)
+    for i in soup.find_all(&quot;a&quot;,class_=&quot;listing-name&quot;):
+        print(i.text)
+</pre>
+
+<p>will yield this,</p>
+
+<p><img alt="" height="315" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(401).png" width="623" /></p>
+
+<p>I have ended the scraping here and the website has not been scrapped further more. I strongly recommed you to do the same so that no one will be affected.</p>
+
+<p><strong>One complete scraping example for familarizing the scraping</strong></p>
+
+<p><strong>Target site: </strong><a href="https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1">https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1</a></p>
+
+<p>Before getting into scraping this website I would like to explain the general layouts which may be seen in the websites. Once the layouts is identified we can code according to it.</p>
+
+<p><strong>1. Information in one long lengthy page:</strong></p>
+
+<p>If this is our case then it is easier for us to write the script which scrapes for the single page alone.</p>
+
+<p><strong>2. Pagination:</strong></p>
+
+<p>If a website has a pagination layout the web site will have multiple pages like page1, page2, page3 and so on.</p>
+
+<p>our example scraping website does have a pagination layout, follow the target site <a href="https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1">https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1</a></p>
+
+<p>and scroll down you will see something like this,</p>
+
+<p><img alt="" height="146" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(403)_LI.jpg" width="544" /></p>
+
+<p>so that is pagination, In this case we need to write a script to go to every single page and scrape the information will explaing more about scraping pagination below.</p>
+
+<p><strong>3. AJAX spinner: </strong>we need to use selenium to get the job done for these types of website and I will also explain how to use selenium in further/same article(s).</p>
+
+<p>&nbsp;</p>
+
+<p><strong>Exaplanition for scraping pagination for the above link: </strong><a href="https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1">https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1</a></p>
+
+<p>What we are going to do for this case is we are going to scrape all the available page links first, (see the above image) you will find something like this 1,2,3,...... Next&gt; all those are links &lt;a&gt; tag in html but dont scrape for those links. If you scrape for those links then this will happen you will get the page link for page 1,2,3...9 but not for further pages since you have <strong>Next &gt; link&nbsp; </strong>blocking the further links there.</p>
+
+<p>Run the below code and see the output <strong>[code 10]:</strong></p>
+
+<pre lang="python">
+#Scrapes for 9 pages only
+def Scrape(weblink):
+    r = requests.get(weblink)
+    soup = BeautifulSoup(r.content,&quot;html.parser&quot;)
+    for i in soup.find_all(&quot;a&quot;,class_=&quot;available-number pagination-links_anchor&quot;):
+        print(&quot;https://www.yelp.com&quot;+i.get(&quot;href&quot;))
+        print(i.text)
+</pre>
+
+<p>you will only get the output for first 9 pages so in order to get the links of all pages what we are going to do is we are going to scrape the next links.</p>
+
+<p>go to the link and inspect the next link,</p>
+
+<p><img alt="" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/Screenshot%20(406).png" style="width: 1007px; height: 536px" /></p>
+
+<p>so you will find that the next link belongs to a class named <strong>&quot;u-decoration-none next pagination-links_anchor&quot;</strong></p>
+
+<p>scraping for the link will give you the next link for the page so if you are scraping for page 1 it will give the link for the page 2 , if you are scraping for page 2 then will you link for the page 3 <strong><em>does it make any sense? </em></strong></p>
+
+<p><strong><em>RECUSION...! :)</em></strong></p>
+
+<pre lang="python">
+    def scrape(weblink):
+          r = requests.get(weblink)
+          soup = BeautifulSoup(r.content,&quot;html.parser&quot;)
+          # Do some scraping for the current page here
+          for i in soup.find_all(&quot;a&quot;,class_=&quot;u-decoration-none next pagination-links_anchor&quot;):
+                print(&quot;https://www.yelp.com&quot;+i.get(&quot;href&quot;))
+                scrape(&quot;https://www.yelp.com&quot;+i.get(&quot;href&quot;))
+</pre>
+
+<p>Now we can do what ever we want,</p>
+
+<p><b>We will scrape the names of all restuarants as an example</b></p>
+
+<pre lang="python">
+def scrape(weblink):
+    print(weblink)
+    r = requests.get(weblink)
+    soup = BeautifulSoup(r.content,&quot;html.parser&quot;)
+    for i in soup.find_all(&quot;a&quot;,class_=&quot;biz-name js-analytics-click&quot;):
+        print(i.text)
+    for i in soup.find_all(&quot;a&quot;,class_=&quot;u-decoration-none next pagination-links_anchor&quot;):
+        print(&quot;https://www.yelp.com&quot;+i.get(&quot;href&quot;))
+        scrape(&quot;https://www.yelp.com&quot;+i.get(&quot;href&quot;))
+</pre>
+
+<p>&nbsp;</p>
+
+<p>This will give output some thing like this,</p>
+
+<blockquote class="quote">
+<div class="op">Quote:</div>
+
+<p>https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;ns=1<br />
+Extreme Pizza<br />
+B Patisserie<br />
+Cuisine of Nepal<br />
+ABV<br />
+Southern Comfort Kitchen<br />
+Buzzworks<br />
+Frances<br />
+The Morris<br />
+Tacorea<br />
+No No Burger<br />
+August 1 Five<br />
+https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;start=10<br />
+https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;start=10<br />
+Extreme Pizza<br />
+Gary Danko<br />
+Italian Homemade Company<br />
+Nopa<br />
+Sugarfoot<br />
+Big Rec Taproom<br />
+El Farolito<br />
+Hogwash<br />
+Lol&oacute;<br />
+Kebab King<br />
+Paprika<br />
+https://www.yelp.com/search?find_desc=Restaurants&amp;find_loc=San+Francisco%2C+CA&amp;start=20</p>
+</blockquote>
+
+<p>&nbsp;</p>
+
+<p>You will find &quot;<strong>Extreme pizza&quot; </strong>repeated 2 times it is nothing but a sponsored advertisement of the hotel which will be displayed as the first for every page. we can write a script to skip the first entry. Conditional statement will do I dont need to explaing this a basic beginner could do this.</p>
+
+<p>&nbsp;</p>
+
+<h2 style="color: red"><strong><u>ULTIMATE SELENIUM GUIDE:</u></strong></h2>
+
+<p>So far we have used several libraries for some really basic scraping now we are going to use web drivers for complete browser automation and this is gonna be really interesting to view and watch...</p>
+
+<p>the best way to install the selenium is by downloading the source <a href="https://pypi.python.org/pypi/selenium">https://pypi.python.org/pypi/selenium</a></p>
+
+<p>&nbsp;</p>
+
+<p>ok after installing the selenium test the working of the selenium by importing the web driver,</p>
+
+<pre lang="python">
+    from selenium import webdriver
+</pre>
+
+<p><br />
+you should not get any error if this line is executed. If there is no errors then we shall get started, from the import module you will find something like webdriver, yeah we are going to use webdrivers for automating the browsers,</p>
+
+<p>OK, there are various web drivers available out there which does the very same task but I am going to cover only two,</p>
+
+<div style="background-color: #0e120f">
+<p style="color: white"><strong>1. <u>chrome driver:- </u>for real world scraping</strong></p>
+
+<p style="color: yellow"><strong>2. <u>phantomjs:- </u>for headless scraping</strong></p>
+
+<p style="color: white"><strong>Download chrome driver: </strong><a href="https://sites.google.com/a/chromium.org/chromedriver/downloads">https://sites.google.com/a/chromium.org/chromedriver/downloads</a></p>
+
+<p style="color: white"><strong>Download PhantomJs: </strong><a href="http://phantomjs.org/download.html">http://phantomjs.org/download.html</a></p>
+</div>
+
+<p>&nbsp;</p>
+
+<p><strong>Chrome Driver:</strong></p>
+
+<p>we will see how to use the chrome driver here now,&nbsp; once you have tested that chrome driver has installed properly then do the following things, first of all it is <strong>adviced to place the chromdriver in a static location e.g C:\\chromdriver.exe , this is because you can avoid huge memory consumption(literally) I mean that if you are placing it near to your python scripts it will work fine but for the seperate projects you need to place the chromedriver everywhere this will lead to lot of nuissance.</strong></p>
+
+<p>ok, now have a look at the code 11, this code will open google</p>
+
+<p><strong>[CODE 11]:</strong></p>
+
+<pre lang="python">
+from selenium import webdriver
+# we are going to use the Chrome Driver so we have used Chrome
+browser = webdriver.Chrome(&quot;E:\\chromedriver.exe&quot;)
+#Get the website
+browser.get(&quot;https://www.google.com&quot;)
+</pre>
+
+<p>The function get will get the websitelink which is passed as an argument! now we will open and close the browser, In-order to close the browser we will use the <strong>close() method.</strong></p>
+
+<blockquote class="quote">
+<div class="op">syntax for closing the browser:</div>
+
+<div class="op"><strong>webdriver.close()</strong></div>
+</blockquote>
+
+<div class="op"><strong>so, adding browser.close() at the end of the code will close the browser.</strong></div>
+
+<div class="op">&nbsp;</div>
+
+<div class="op"><strong>Have a look @ this video please :&nbsp; <a href="https://www.youtube.com/watch?v=MRkEvaJ8SXA&amp;feature=youtu.be">https://www.youtube.com/watch?v=MRkEvaJ8SXA&amp;feature=youtu.be</a></strong></div>
+
+<p>you can find that the browser is closed by the webdriver is not closed this can be done by using <strong>browser.quit() method. [code 12]</strong></p>
+
+<h4 style="color: blue">Understanding ID,name and css_selectors:</h4>
+
+<p><strong><u><b>ID:</b></u></strong></p>
+
+<p style="background-color: #0e120f; color: white">The id global attribute defines a unique identifier (ID) which must be unique in the whole document. Its purpose is to identify the element when linking (using a fragment identifier), scripting, or styling (with CSS). reference :MDN</p>
+
+<p><b>See the sample ID here:</b></p>
+
+<p><img alt="ID" height="500/" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/id.jpg" width="2000" /></p>
+
+<p>ok, now we will try to click the button using an id!</p>
+
+<p><a href="https://www.codeproject.com/Questions/ask.aspx">See the sample code project page</a></p>
+
+<p>here you will find the CANCL button right click on the cancel button and inspect the element, you will find something like this,</p>
+
+<p><img alt="CANCEL BUTTON" height="800/" src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/CANCEL.jpg" width="2000" /></p>
+
+<p>Once, we click on the cancel button it is going to redirect us on the codeproject&#39;s homepage, so we are going to use selenium to automate the process, ok let&#39;s get started!</p>
+
+<pre lang="python">
+    #SWAMI KARUPPASWAMI THUNNAI
+
+    from selenium import webdriver
+    
+    if __name__==&quot;__main__&quot;:
+        browser = webdriver.Chrome(&quot;E:\\chromedriver.exe&quot;)
+        #get the url
+        browser.get(&quot;https://www.codeproject.com/Questions/ask.aspx&quot;)
+        #click the cancel button using id
+        cancel_button = browser.find_element_by_id(&quot;ctl00_ctl00_MC_AMC_PostEntry_Cancel&quot;)
+        cancel_button.click()
+
+</pre>
+
+<p>have a look at this line [cancel_button = browser.find_element_by_id(&quot;ctl00_ctl00_MC_AMC_PostEntry_Cancel&quot;)] we are finding the element using ID and clicking it after that we do nothing so once the button has clicked then the url redirects to homepage since we have cicked cancel button.</p>
+
+<h3 style="color:green"><u><strong>Understanding name tags:</strong></u></h3>
+
+<p>Now, open up <a href="https://www.google.com">Google^</a> and start inspecting the search panel and you will find something like this</p>
+
+<img src="https://raw.githubusercontent.com/VISWESWARAN1998/VISWESWARAN/master/google.jpg" alt="Google Screenshot" width="1000" height="800"/>
+
+<p style="background-color:green;color:white;font-size:15px;">IMPORTANT:<br>So, far we have opened up a page, clicked the button and got the page source. Now we are going to fill an-entry box so, we need some more attention from now since we are moving from basics to advanced!</p>
+
+<p><b>Import the keys in-order to send the key-words</b></p>
+
+<pre lang="python">
+    from selenium.webdriver.common.keys import Keys
+</pre>
+
+<p>Ok, we will see an example how we are going automate a google search</p>
+
+<pre lang="python">
+    # SWAMI KARUPPASWAMI THUNNAI
+    # CODE-14
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    browser = webdriver.Chrome("E:\\chromedriver.exe")
+    browser.get("https://www.google.com")
+    name = browser.find_element_by_name("q")
+    keyword = "Codeproject"
+    #Use send_keys to send the keywords
+    # NOTE: Do not use the webdriver like in here browser.send_keys("something")
+    # Webdriver does not have that kind of attribute
+    # Use the actual variable which is used to find the element
+    # in our case it is "name"
+    name.send_keys(keyword)
+</pre>
+
+<p>So, send_keys(arg) will take the keyword as an argument and will send the keywords in the entry boxes.</p>
+
+<p>&nbsp;</p>
+
+<p>In the next upcomming tutorials I will add how to use Inspetors and getting the xpath,logging into the websites etc.,</p>
+
+<p>&nbsp;</p>
+
+<h2>Points of Interest</h2>
+
+<p>Final message I would like to convey with you is</p>
+
+<p>I have not broken any rules on any of the site and I have not disobeyed any of the websites terms and conditions and I ask the users to use this knowledge wisely for humanity not exploiting the websites which I will not encourage you to do.&nbsp;</p>
+
+<p><strong>Further to come in next articles:</strong></p>
+
+<p><strong>Kindly take a survey I will cover it for you if this article is a successesfull one,</strong></p>
+
+<p><br />
+<a href="https://goo.gl/forms/IWCMBB5os8O2L3Ea2">https://goo.gl/forms/IWCMBB5os8O2L3Ea2</a></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<h2>History</h2>
+
+<p>Keep a running update of any changes or improvements you&#39;ve made here.</p>
